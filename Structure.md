@@ -21,8 +21,6 @@
     - suits
     - ranks
     - cards[]
-    - playingCards[] - the shuffled array I will use to pop cards from
-- methods
     - init()
     - shuffle()
     - drawFromDeck()
@@ -59,3 +57,7 @@
 4. 
 
 ### Questions
+1. What happens if there are no more cards in the deck and the game is not over yet ?
+2. What happens if there are no more cards in the deck and the game is not over yet and the player does not have any card to put down ?
+3. What happens when the game is over ? New Deck or reset the deck ?
+4. 
