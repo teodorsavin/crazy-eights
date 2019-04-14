@@ -2,7 +2,6 @@
 
 namespace App\Interfaces;
 
-
 interface CardInterface
 {
     public function getRank();

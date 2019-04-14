@@ -3,14 +3,13 @@
 
 namespace App\Entities;
 
-
 use App\Interfaces\CardInterface;
 
 class Card implements CardInterface
 {
     // I added the numbers as string on purpose for all the values to have the same type
-    CONST RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-    CONST SUITES = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
+    const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    const SUITES = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
 
     private $rank;
     private $suite;

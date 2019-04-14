@@ -3,7 +3,6 @@
 
 namespace App\Entities;
 
-
 use App\Interfaces\CardInterface;
 use App\Interfaces\DeckInterface;
 

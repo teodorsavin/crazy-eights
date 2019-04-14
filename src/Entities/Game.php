@@ -3,7 +3,6 @@
 
 namespace App\Entities;
 
-
 use App\Interfaces\DeckInterface;
 use App\Interfaces\GameInterface;
 
@@ -21,8 +20,8 @@ abstract class Game implements GameInterface
         $this->initialCardsPerPlayer = $this->getInitialCardsPerPlayers();
     }
 
-    public abstract function getNumberOfPlayers();
-    public abstract function getInitialCardsPerPlayers();
+    abstract public function getNumberOfPlayers();
+    abstract public function getInitialCardsPerPlayers();
 
     public function initiateGame()
     {
