@@ -15,6 +15,7 @@ I used composer package php-di, to bind interfaces to concrete classes. That way
 - Make the number of players dynamic from the console.
 - Make the names of the players dynamic from the console.
 - Split the play method into multiple smaller methods.
+- Add tests
 
 #### How to run?
 1. ```composer install```
