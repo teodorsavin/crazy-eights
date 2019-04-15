@@ -7,17 +7,28 @@ use App\Interfaces\CardInterface;
 
 class Card implements CardInterface
 {
-    // I added the numbers as string on purpose for all the values to have the same type
-    const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    // I added the numbers as string on purpose for all the values
+    // to have the same type and the keys represent the value of the card
+    const RANKS = [
+        1 => 'A', 2 => '2', 3 => '3', 4 => '4',
+        5 => '5', 6 => '6', 7 => '7', 8 => '8', 9 => '9',
+        10 => '10', 12 => 'J', 13 => 'Q', 14 => 'K'
+    ];
     const SUITES = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
 
     private $rank;
     private $suite;
+    private $value;
 
     public function __construct(string $rank, string $suite)
     {
         $this->setRank($rank);
         $this->setSuite($suite);
+
+        // $rank should always be in the RANKS array because otherwise the
+        // setRank() method would throw an error
+        $this->setValue(array_search($rank, self::RANKS));
+
     }
 
     public function getRank()
@@ -28,6 +39,11 @@ class Card implements CardInterface
     public function getSuite()
     {
         return $this->suite;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
     }
 
     public function setRank(string $rank)
@@ -46,6 +62,11 @@ class Card implements CardInterface
         }
 
         $this->suite = $suite;
+    }
+
+    public function setValue(int $value)
+    {
+        $this->value = $value;
     }
 
     /**

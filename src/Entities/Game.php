@@ -3,27 +3,33 @@
 
 namespace App\Entities;
 
+use App\Interfaces\CardInterface;
 use App\Interfaces\DeckInterface;
 use App\Interfaces\GameInterface;
 
 abstract class Game implements GameInterface
 {
-    private $deck;
-    private $players;
-    private $numberOfPlayers;
-    private $initialCardsPerPlayer;
+    protected $deck;
+    protected $players;
+    protected $numberOfPlayers;
+    protected $initialCardsPerPlayer;
+    protected $lastCard;
 
     public function __construct(DeckInterface $deck)
     {
         $this->deck = $deck;
         $this->numberOfPlayers = $this->getNumberOfPlayers();
-        $this->initialCardsPerPlayer = $this->getInitialCardsPerPlayers();
+        $this->initialCardsPerPlayer = $this->getInitialCardsPerPlayer();
+
+        $this->initiateGame();
     }
 
     abstract public function getNumberOfPlayers();
-    abstract public function getInitialCardsPerPlayers();
+    abstract public function getInitialCardsPerPlayer();
+    abstract public function findStartingPlayer();
+    abstract public function playHand(CardInterface $lastCard);
 
-    public function initiateGame()
+    public function initiateGame(): void
     {
         $this->deck->shuffle();
 
@@ -37,8 +43,5 @@ abstract class Game implements GameInterface
         }
     }
 
-    public function findStartingPlayer()
-    {
-        // TODO: Implement findStartingPlayer() method.
-    }
+
 }

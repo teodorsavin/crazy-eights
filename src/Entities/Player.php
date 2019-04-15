@@ -69,4 +69,14 @@ class Player implements PlayerInterface
     {
         array_push($this->hand, $card);
     }
+
+    public function getValueOfHand(): int
+    {
+        $totalValueOfCards = 0;
+        foreach ($this->hand as $card) {
+            $totalValueOfCards += $card->getValue();
+        }
+
+        return $totalValueOfCards;
+    }
 }

@@ -8,4 +8,5 @@ interface PlayerInterface
     public function playCardBySuite($suite);
     public function playCardByRank($rank);
     public function drawCard(CardInterface $card);
+    public function getValueOfHand(): int;
 }

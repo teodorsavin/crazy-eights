@@ -54,7 +54,24 @@
 3. Create gameFactory to make it scalable to support more games
 3. Implement the Card class and Deck class first
     - use shuffle function from php since I don't care about the keys
-4. 
+4. Play game:
+    - while no player is without cards:
+        - check if player has card in hand to play based on lastCardPlayed
+            - yes 
+                - play card
+                    - set new lastCardPlayed
+                - check if player still has cards in his hand
+                    - no cards 
+                        - set player without cards flag
+                        - set player as winner
+                    - yes -> do nothing
+                - continue (go to next player)
+            - no 
+                - check if there are cards in deck
+                    - no -> do nothing
+                    - yes
+                        - draw card
+                - continue (go to next player)
 
 ### Questions
 1. What happens if there are no more cards in the deck and the game is not over yet ?
