@@ -25,17 +25,25 @@ class Player implements PlayerInterface
     }
 
     /**
+     * @return array
+     */
+    public function getHand()
+    {
+        return $this->hand;
+    }
+
+    /**
      * @param CardInterface $card
      * @return CardInterface|null
      */
     public function playCard(CardInterface $card): ?CardInterface
     {
-        $card = $this->playCardByRank($card->getRank());
-        if (!$card) {
-            $card = $this->playCardBySuite($card->getSuite());
+        $playedCard = $this->playCardByRank($card->getRank());
+        if (!$playedCard) {
+            $playedCard = $this->playCardBySuite($card->getSuite());
         }
 
-        return $card;
+        return $playedCard;
     }
 
     /**
@@ -44,8 +52,9 @@ class Player implements PlayerInterface
      */
     public function playCardBySuite($suite): ?CardInterface
     {
-        foreach ($this->hand as $card) {
+        foreach ($this->hand as $key => $card) {
             if ($card->isEqualWithSuite($suite)) {
+                unset($this->hand[$key]);
                 return $card;
             }
         }
@@ -59,8 +68,9 @@ class Player implements PlayerInterface
      */
     public function playCardByRank($rank): ?CardInterface
     {
-        foreach ($this->hand as $card) {
+        foreach ($this->hand as $key => $card) {
             if ($card->isEqualWithRank($rank)) {
+                unset($this->hand[$key]);
                 return $card;
             }
         }

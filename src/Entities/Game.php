@@ -38,6 +38,11 @@ abstract class Game implements GameInterface
     {
         $this->deck->shuffle();
 
+        $this->logger->log(
+            "A new game is starting. We have on the table {$this->numberOfPlayers} players. \n
+Let's wish them good luck!"
+        );
+
         // add players to the table and give them cards
         for ($i = 1; $i <= $this->numberOfPlayers; $i++) {
             $player = new Player("Player {$i}");
@@ -45,10 +50,10 @@ abstract class Game implements GameInterface
                 $player->drawCard($this->deck->drawFromDeck());
             }
             $this->players[] = $player;
+
+            $this->logger->logPlayerHand($player);
         }
 
-        $this->logger->log("A new game is starting. We have on the table {$this->numberOfPlayers} players. Let's wish them good luck!");
+
     }
-
-
 }

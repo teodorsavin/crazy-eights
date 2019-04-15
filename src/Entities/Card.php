@@ -28,7 +28,6 @@ class Card implements CardInterface
         // $rank should always be in the RANKS array because otherwise the
         // setRank() method would throw an error
         $this->setValue(array_search($rank, self::RANKS));
-
     }
 
     public function getRank()
