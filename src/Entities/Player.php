@@ -17,6 +17,14 @@ class Player implements PlayerInterface
     }
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * @param CardInterface $card
      * @return CardInterface|null
      */
@@ -78,5 +86,13 @@ class Player implements PlayerInterface
         }
 
         return $totalValueOfCards;
+    }
+
+    /**
+     * @return int|void
+     */
+    public function getCardsNumberInHand(): int
+    {
+        return count($this->hand);
     }
 }

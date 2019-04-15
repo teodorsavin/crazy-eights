@@ -47,4 +47,9 @@ class Deck implements DeckInterface
     {
         return array_pop($this->deck);
     }
+
+    public function hasCards(): int
+    {
+        return count($this->deck);
+    }
 }

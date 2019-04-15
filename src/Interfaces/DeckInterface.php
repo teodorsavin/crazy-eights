@@ -8,5 +8,6 @@ interface DeckInterface
     public function init();
 
     public function shuffle();
-    public function drawFromDeck();
+    public function drawFromDeck(): CardInterface;
+    public function hasCards(): int;
 }

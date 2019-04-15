@@ -6,6 +6,7 @@ namespace App;
 use App\Entities\Game;
 use App\Interfaces\CardInterface;
 use App\Interfaces\DeckInterface;
+use App\Interfaces\LoggerInterface;
 use App\Interfaces\PlayerInterface;
 
 class CrazyEights extends Game
@@ -18,11 +19,12 @@ class CrazyEights extends Game
     const MAX_NUMBER_OF_PLAYERS = 6;
     const INITIAL_CARDS_PER_PLAYER = 5;
 
-    public function __construct(DeckInterface $deck, int $numberOfPlayers)
+    public function __construct(DeckInterface $deck, LoggerInterface $logger, int $numberOfPlayers)
     {
-        parent::__construct($deck);
+        parent::__construct($deck, $logger);
 
         $this->setNumberOfPlayers($numberOfPlayers);
+        $this->lastCardPlayed = $this->deck->drawFromDeck();
     }
 
     /**
@@ -83,6 +85,9 @@ class CrazyEights extends Game
         return $this->startingPlayerIndex;
     }
 
+    /**
+     * @param CardInterface $lastCard
+     */
     public function playHand(CardInterface $lastCard)
     {
         $this->lastCardPlayed = $lastCard;
@@ -90,6 +95,47 @@ class CrazyEights extends Game
 
     public function play()
     {
-        // TODO: Implement this method
+        $noWinner = true;
+        $currentPlayerIndex = $this->findStartingPlayer();
+        while ($noWinner) {
+
+            /** @var PlayerInterface $currentPlayer */
+            $currentPlayer = $this->players[$currentPlayerIndex];
+
+            $this->logger->log("Now it's {$currentPlayer->getName()} turn!");
+
+            // check if player has card in hand to play based on lastCardPlayed
+            $cardPlayed = $currentPlayer->playCard($this->lastCardPlayed);
+
+            if ($cardPlayed !== null) {
+                // Player had a card to be played
+                $this->lastCardPlayed = $cardPlayed;
+
+                if ($this->assertWinner($currentPlayer)) {
+                    $this->logger->log($currentPlayer->getName() . ' is the WINNER!');
+                    return $currentPlayer;
+                }
+            } else {
+                // Player didn't have a card in his hand to play
+                if ($this->deck->hasCards() > 0) {
+                    $newCard = $this->deck->drawFromDeck();
+                    $currentPlayer->drawCard($newCard);
+
+                    $this->logger->log("{$currentPlayer->getName()} draw a {$newCard->getRank()} of {$newCard->getSuite()} from the deck.");
+                } else {
+                    // skip
+                    $this->logger->log("{$currentPlayer->getName()} skipped because there are no cards in the deck");
+                }
+            }
+
+            // change player to the next one. If it is the last player, start over from 0
+            $currentPlayerIndex = (++$currentPlayerIndex) % $this->numberOfPlayers;
+        }
+
+    }
+
+    public function assertWinner(PlayerInterface $player)
+    {
+        return (bool) !$player->getCardsNumberInHand();
     }
 }

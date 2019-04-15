@@ -6,18 +6,22 @@ namespace App\Entities;
 use App\Interfaces\CardInterface;
 use App\Interfaces\DeckInterface;
 use App\Interfaces\GameInterface;
+use App\Interfaces\PlayerInterface;
+use App\Interfaces\LoggerInterface;
 
 abstract class Game implements GameInterface
 {
     protected $deck;
+    protected $logger;
     protected $players;
     protected $numberOfPlayers;
     protected $initialCardsPerPlayer;
     protected $lastCard;
 
-    public function __construct(DeckInterface $deck)
+    public function __construct(DeckInterface $deck, LoggerInterface $logger)
     {
         $this->deck = $deck;
+        $this->logger = $logger;
         $this->numberOfPlayers = $this->getNumberOfPlayers();
         $this->initialCardsPerPlayer = $this->getInitialCardsPerPlayer();
 
@@ -28,6 +32,7 @@ abstract class Game implements GameInterface
     abstract public function getInitialCardsPerPlayer();
     abstract public function findStartingPlayer();
     abstract public function playHand(CardInterface $lastCard);
+    abstract public function assertWinner(PlayerInterface $player);
 
     public function initiateGame(): void
     {
@@ -41,6 +46,8 @@ abstract class Game implements GameInterface
             }
             $this->players[] = $player;
         }
+
+        $this->logger->log("A new game is starting. We have on the table {$this->numberOfPlayers} players. Let's wish them good luck!");
     }
 
 

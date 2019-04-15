@@ -12,4 +12,5 @@ interface GameInterface
     public function getNumberOfPlayers();
     public function getInitialCardsPerPlayer();
     public function playHand(CardInterface $lastCard);
+    public function assertWinner(PlayerInterface $player);
 }
