@@ -108,14 +108,10 @@ class CrazyEights extends Game
 
             /** @var PlayerInterface $currentPlayer */
             $currentPlayer = $this->players[$currentPlayerIndex];
-
             $this->logger->log("Now it's {$currentPlayer->getName()} turn!");
 
             // check if player has card in hand to play based on lastCardPlayed
-            $cardPlayed = $currentPlayer->playCard($this->lastCardPlayed);
-
-            if ($cardPlayed !== null) {
-                // Player had a card to be played
+            if ($cardPlayed = $currentPlayer->playCard($this->lastCardPlayed)) {
                 $this->lastCardPlayed = $cardPlayed;
                 $skipped = 0;
 
