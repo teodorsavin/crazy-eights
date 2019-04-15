@@ -66,24 +66,14 @@ class CrazyEights extends Game
     }
 
     /**
-     * Find the first player with the most hand value and set it as a starting player
-     *
-     * @return int
+     * Sort players by value
      */
-    public function findStartingPlayer(): int
+    public function sortPlayersByValueOfHand()
     {
-        $maxValue = 0;
-        $this->startingPlayerIndex = null;
-        foreach ($this->players as $key => $player) {
-            $currentPlayerHandValue = $player->getValueOfHand();
-
-            if ($maxValue < $currentPlayerHandValue) {
-                $maxValue = $currentPlayerHandValue;
-                $this->startingPlayerIndex = $key;
-            }
-        }
-
-        return $this->startingPlayerIndex;
+        usort($this->players, function($player1, $player2)
+        {
+            return ($player2->getValueOfHand() <=> $player1->getValueOfHand());
+        });
     }
 
     /**
@@ -97,9 +87,10 @@ class CrazyEights extends Game
     public function play(): ?PlayerInterface
     {
         $skipped = 0;
-        $currentPlayerIndex = $this->findStartingPlayer();
-        while (true) {
+        $currentPlayerIndex = 0;
+        $this->sortPlayersByValueOfHand();
 
+        while (true) {
             // if we did a round where every player was skipped we got into an impossible game
             if ($skipped == $this->numberOfPlayers) {
                 $this->logger->log('No winners. We reached an impossible game.');

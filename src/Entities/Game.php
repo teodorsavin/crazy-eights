@@ -30,7 +30,7 @@ abstract class Game implements GameInterface
 
     abstract public function getNumberOfPlayers();
     abstract public function getInitialCardsPerPlayer();
-    abstract public function findStartingPlayer();
+    abstract public function sortPlayersByValueOfHand();
     abstract public function playHand(CardInterface $lastCard);
     abstract public function assertWinner(PlayerInterface $player);
 
